@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Course Enrollment Form</title>
+</head>
+<body>
+
+<header>
+    <h1>Course Enrollment Form</h1>
+</header>
+
+<main>
+    <form>
+
+        <!-- Email -->
+        <section>
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="email" required>
+        </section>
+        <br>
+
+        <!-- Course with Datalist -->
+        <section>
+            <label for="course">Select Course:</label><br>
+            <input list="courses" id="course" name="course" required>
+
+            <datalist id="courses">
+                <option value="HTML">
+                <option value="CSS">
+                <option value="JavaScript">
+                <option value="React">
+                <option value="NodeJS">
+            </datalist>
+        </section>
+        <br>
+
+        <!-- Age -->
+        <section>
+            <label for="age">Age:</label><br>
+            <input type="number" id="age" name="age"
+                   min="18" max="60" required>
+        </section>
+        <br>
+
+        <!-- Skill Level (Range + Meter) -->
+        <section>
+            <label for="skill">Skill Level (1-10):</label><br>
+            <input type="range" id="skill" name="skill"
+                   min="1" max="10" value="5">
+
+            <br><br>
+            Skill Indicator:
+            <meter value="5" min="1" max="10"
+                   low="3" high="7" optimum="9">
+                5 out of 10
+            </meter>
+        </section>
+        <br>
+
+        <!-- Enrollment Progress -->
+        <section>
+            Enrollment Completion:<br>
+            <progress value="70" max="100"></progress>
+            70%
+        </section>
+        <br>
+
+        <!-- Submit -->
+        <section>
+            <input type="submit" value="Enroll">
+        </section>
+
+    </form>
+</main>
+
+</body>
+</html>
