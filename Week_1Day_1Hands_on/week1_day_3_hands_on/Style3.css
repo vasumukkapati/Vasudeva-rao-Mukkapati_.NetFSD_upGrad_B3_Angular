@@ -1,0 +1,44 @@
+/* Page Background */
+body {
+    background-color: #f0f4f8;
+    font-family: Arial, sans-serif;
+}
+
+/* Section Styling */
+.features {
+    background-color: #1e3a8a;   /* Dark blue section */
+    padding: 30px;
+    border-radius: 10px;
+}
+
+/* Heading */
+.features h1 {
+    color: #ffffff;   /* White text */
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Remove default bullets */
+.feature-list {
+    list-style: none;
+    padding: 0;
+}
+
+/* Feature Items */
+.feature-list li {
+    background-color: #ffffff;     /* White cards */
+    color: #1e293b;                /* Dark text */
+    margin: 12px 0;
+    padding: 15px;
+    border-radius: 6px;
+    border-left: 2px solid #3b82f6; /* Blue accent line */
+    
+    font-weight: 500;
+}
+
+/* Hover Effect */
+.feature-list li:hover {
+    background-color: #3b82f6;  /* Blue background */
+    color: #ffffff;             /* White text */
+    transform: scale(1.03);
+}
