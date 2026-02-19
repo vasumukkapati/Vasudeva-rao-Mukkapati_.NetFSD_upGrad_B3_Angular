@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Discount Calculator</title>
+</head>
+<body>
+
+<h2>Online Store Discount</h2>
+
+<!-- Input Box -->
+<label>Enter Purchase Amount:</label><br>
+<input type="number" id="amountInput" placeholder="Enter amount"><br><br>
+
+<!-- Button -->
+<button onclick="calculateDiscount()">Calculate Discount</button>
+
+<!-- Output Area -->
+<h3 id="result"></h3>
+
+<script>
+function calculateDiscount() {
+
+    let amountInput = document.getElementById("amountInput").value;
+    let result = document.getElementById("result");
+
+    // Validate empty input
+    if (amountInput.trim() === "") {
+        result.innerHTML = "Please enter purchase amount.";
+        return;
+    }
+
+    let amount = Number(amountInput);
+
+    // Validate negative values
+    if (amount < 0) {
+        result.innerHTML = "Amount cannot be negative.";
+        return;
+    }
+
+    let discount = 0;
+    let finalAmount = 0;
+
+    if (amount >= 5000) {
+        discount = amount * 0.20;
+    }
+    else if (amount >= 3000) {
+        discount = amount * 0.10;
+    }
+    else {
+        discount = 0;
+    }
+
+    finalAmount = amount - discount;
+
+    result.innerHTML =
+        "Purchase Amount: " + amount + "<br>" +
+        "Discount Amount: " + discount + "<br>" +
+        "Final Payable Amount: " + finalAmount;
+}
+</script>
+
+</body>
+</html>

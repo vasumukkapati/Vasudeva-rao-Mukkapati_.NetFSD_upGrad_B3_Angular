@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Number Analysis Tool</title>
+</head>
+<body>
+
+<h2>Number Analysis Tool</h2>
+
+<label>Enter a Number:</label><br>
+<input type="number" id="numberInput" placeholder="Enter number"><br><br>
+
+<button onclick="analyzeNumber()">Analyze</button>
+
+<script>
+
+function analyzeNumber() {
+
+    let input = document.getElementById("numberInput").value;
+
+    if (input.trim() === "") {
+        console.log("Please enter a number.");
+        return;
+    }
+
+    let num = Number(input);
+
+    console.clear();  // Clears old console output
+
+    console.log("Given Number:", num);
+
+    // 1️⃣ Ternary Operator (Positive / Negative)
+    let sign = (num >= 0) ? "Positive" : "Negative";
+    console.log("Sign:", sign);
+
+    // 2️⃣ If-Else (Even / Odd)
+    if (num % 2 === 0) {
+        console.log("Parity: Even");
+    } else {
+        console.log("Parity: Odd");
+    }
+
+    // 3️⃣ Loop (1 to given number)
+    if (num > 0) {
+        console.log("Numbers from 1 to " + num + ":");
+        for (let i = 1; i <= num; i++) {
+            console.log(i);
+        }
+    } else {
+        console.log("Loop works only for positive numbers.");
+    }
+}
+
+</script>
+
+</body>
+</html>

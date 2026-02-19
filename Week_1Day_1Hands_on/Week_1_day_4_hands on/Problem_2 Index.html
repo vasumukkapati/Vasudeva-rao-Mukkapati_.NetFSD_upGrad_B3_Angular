@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Grade Evaluator</title>
+</head>
+<body>
+
+<h2>Student Grade Result</h2>
+
+<label>Enter Marks:</label><br>
+<input type="number" id="marksInput" placeholder="Enter marks"><br><br>
+
+<button onclick="calculateGrade()">Calculate Grade</button>
+
+<h3 id="result"></h3>
+
+<script>
+function calculateGrade() {
+
+    let marksInput = document.getElementById("marksInput").value;
+    let result = document.getElementById("result");
+
+    // ✅ Check if empty FIRST
+    if (marksInput.trim() === "") {
+        result.innerHTML = "Please enter marks.";
+        return;
+    }
+
+    let marks = Number(marksInput);
+
+    // ✅ Check valid range
+    if (marks < 0 || marks > 100) {
+        result.innerHTML = "Marks must be between 0 and 100.";
+        return;
+    }
+
+    let grade;
+
+    if (marks >= 75) {
+        grade = "Grade A";
+    } 
+    else if (marks >= 60) {
+        grade = "Grade B";
+    } 
+    else if (marks >= 40) {
+        grade = "Grade C";
+    } 
+    else {
+        grade = "Fail";
+    }
+
+    result.innerHTML = "Marks: " + marks + "<br>Grade: " + grade;
+}
+</script>
+
+</body>
+</html>
