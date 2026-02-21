@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Info Display</title>
+</head>
+<body>
+
+    <h2>User Information</h2>
+
+    <!-- Button -->
+    <button onclick="showUser()">Show User Info</button>
+
+    <!-- Paragraphs to display data -->
+    <p id="name"></p>
+    <p id="age"></p>
+    <p id="city"></p>
+
+    <script>
+        function showUser() {
+
+            // Create object inside function (not global)
+            var user = {
+                name: "Rahul",
+                age: 22,
+                city: "Hyderabad"
+            };
+
+            // Pass object to another function
+            displayUserInfo(user);
+        }
+
+        function displayUserInfo(userObj) {
+
+            // Access properties using dot notation
+            document.getElementById("name").innerHTML = "Name: " + userObj.name;
+            document.getElementById("age").innerHTML = "Age: " + userObj.age;
+            document.getElementById("city").innerHTML = "City: " + userObj.city;
+        }
+    </script>
+
+</body>
+</html>
