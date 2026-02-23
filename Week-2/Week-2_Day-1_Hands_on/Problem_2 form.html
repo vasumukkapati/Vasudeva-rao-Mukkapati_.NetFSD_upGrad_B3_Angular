@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Live Form Validation</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            margin: 40px;
+        }
+
+        input {
+            display: block;
+            width: 250px;
+            padding: 8px;
+            margin-bottom: 5px;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 8px 15px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Registration Form</h2>
+
+<form>
+
+    <!-- Name -->
+    Name:
+    <input type="text" id="name" onchange="validateName()">
+    <div id="nameError" class="error"></div>
+
+    <!-- Email -->
+    Email:
+    <input type="text" id="email" onchange="validateEmail()">
+    <div id="emailError" class="error"></div>
+
+    <!-- Age -->
+    Age:
+    <input type="number" id="age" onchange="validateAge()">
+    <div id="ageError" class="error"></div>
+
+    <button type="button" onclick="submitForm()">Submit</button>
+
+</form>
+
+<script>
+
+function validateName() {
+    let name = document.getElementById("name").value;
+    let error = document.getElementById("nameError");
+
+    if (name === "") {
+        error.innerHTML = "Name cannot be empty";
+        return false;
+    } else {
+        error.innerHTML = "";
+        return true;
+    }
+}
+
+function validateEmail() {
+    let email = document.getElementById("email").value;
+    let error = document.getElementById("emailError");
+
+    if (!email.includes("@")) {
+        error.innerHTML = "Email must contain @";
+        return false;
+    } else {
+        error.innerHTML = "";
+        return true;
+    }
+}
+
+function validateAge() {
+    let age = document.getElementById("age").value;
+    let error = document.getElementById("ageError");
+
+    if (age <= 18 || age === "") {
+        error.innerHTML = "Age must be greater than 18";
+        return false;
+    } else {
+        error.innerHTML = "";
+        return true;
+    }
+}
+
+function submitForm() {
+
+    let isNameValid = validateName();
+    let isEmailValid = validateEmail();
+    let isAgeValid = validateAge();
+
+    if (isNameValid && isEmailValid && isAgeValid) {
+
+        // Store in sessionStorage
+        sessionStorage.setItem("Name", document.getElementById("name").value);
+        sessionStorage.setItem("Email", document.getElementById("email").value);
+        sessionStorage.setItem("Age", document.getElementById("age").value);
+
+        alert("Data Stored Successfully in sessionStorage");
+    }
+}
+
+</script>
+
+</body>
+</html>
