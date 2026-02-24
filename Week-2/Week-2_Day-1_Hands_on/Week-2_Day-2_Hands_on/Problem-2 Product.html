@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Cart Summary</title>
+</head>
+<body>
+
+    <h2>Product Cart Summary</h2>
+    <button id="showInvoice">Show Invoice</button>
+
+    <pre id="output"></pre>
+
+    <script>
+        // Store product objects in an array
+        const cart = [
+            { name: "Laptop", price: 50000, quantity: 1 },
+            { name: "Mouse", price: 500, quantity: 2 },
+            { name: "Keyboard", price: 1500, quantity: 1 }
+        ];
+
+        // Calculate total cart value using map() and reduce()
+        const calculateTotal = () =>
+            cart
+                .map(function(item) {
+                    return item.price * item.quantity;
+                })
+                .reduce(function(total, value) {
+                    return total + value;
+                }, 0);
+
+        // Generate formatted invoice (NO template literals)
+        const generateInvoice = () => {
+            const items = cart
+                .map(function(item) {
+                    return item.name + " - ₹" + item.price +
+                           " x " + item.quantity +
+                           " = ₹" + (item.price * item.quantity);
+                })
+                .join("\n");
+
+            const total = calculateTotal();
+
+            return "======= INVOICE =======\n\n" +
+                   items +
+                   "\n\n-----------------------\n" +
+                   "Total Cart Value: ₹" + total +
+                   "\n\n=======================";
+        };
+
+        // Pure JavaScript event handling
+        document.getElementById("showInvoice").addEventListener("click", function() {
+            document.getElementById("output").textContent = generateInvoice();
+        });
+
+    </script>
+
+</body>
+</html>
