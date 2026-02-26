@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vehicle Management System - Inheritance</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            padding: 30px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .card {
+            background: white;
+            width: 300px;
+            padding: 20px;
+            margin: 30px auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        p {
+            margin: 8px 0;
+        }
+
+        .title {
+            font-weight: bold;
+            color: blue;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Vehicle Management System</h2>
+
+<div class="card" id="output"></div>
+
+<script>
+    // Base Class
+    class Vehicle {
+        constructor(brand, speed) {
+            this.brand = brand;
+            this.speed = speed;
+        }
+
+        displayInfo() {
+            return `
+                <p><strong>Brand:</strong> ${this.brand}</p>
+                <p><strong>Speed:</strong> ${this.speed} km/h</p>
+            `;
+        }
+    }
+
+    // Derived Class
+    class Car extends Vehicle {
+        constructor(brand, speed, fuelType) {
+            super(brand, speed); // Call parent constructor
+            this.fuelType = fuelType;
+        }
+
+        showCarDetails() {
+            return `
+                ${this.displayInfo()}
+                <p><strong>Fuel Type:</strong> ${this.fuelType}</p>
+            `;
+        }
+    }
+
+    // Create Car Object
+    let car1 = new Car("Toyota", 180, "Petrol");
+
+    // Display in browser
+    document.getElementById("output").innerHTML = `
+        <p class="title">Parent Method Output:</p>
+        ${car1.displayInfo()}
+        <hr>
+        <p class="title">Child Method Output:</p>
+        ${car1.showCarDetails()}
+    `;
+</script>
+
+</body>
+</html>

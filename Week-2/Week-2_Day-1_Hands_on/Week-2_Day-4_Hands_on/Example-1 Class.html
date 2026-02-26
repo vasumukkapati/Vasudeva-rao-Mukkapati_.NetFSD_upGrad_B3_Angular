@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Class - Encapsulation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 30px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            width: 250px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .card p {
+            margin: 8px 0;
+        }
+
+        .grade {
+            font-weight: bold;
+            color: blue;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<h2>Student Details & Grades</h2>
+
+<div class="container" id="output"></div>
+
+<script>
+    // Student Class with Encapsulation
+    class Student {
+        #marks; // private field
+
+        constructor(name, rollNumber, marks) {
+            this.name = name;
+            this.rollNumber = rollNumber;
+            this.#marks = marks;
+        }
+
+        getGrade() {
+            if (this.#marks >= 90) return "A";
+            else if (this.#marks >= 75) return "B";
+            else if (this.#marks >= 50) return "C";
+            else return "Fail";
+        }
+
+        getDetails() {
+            return `
+                <p><strong>Name:</strong> ${this.name}</p>
+                <p><strong>Roll No:</strong> ${this.rollNumber}</p>
+                <p><strong>Marks:</strong> ${this.#marks}</p>
+                <p class="grade"><strong>Grade:</strong> ${this.getGrade()}</p>
+            `;
+        }
+    }
+
+    // Create Student Objects
+    let student1 = new Student("Varun", 1, 92);
+    let student2 = new Student("Arun", 2, 68);
+
+    let students = [student1, student2];
+
+    let output = document.getElementById("output");
+
+    students.forEach(student => {
+        let div = document.createElement("div");
+        div.className = "card";
+        div.innerHTML = student.getDetails();
+        output.appendChild(div);
+    });
+</script>
+
+</body>
+</html>
