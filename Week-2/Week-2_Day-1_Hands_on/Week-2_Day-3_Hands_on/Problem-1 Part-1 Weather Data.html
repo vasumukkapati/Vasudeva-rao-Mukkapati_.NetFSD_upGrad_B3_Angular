@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather Data Fetcher</title>
+    <style>
+        body { font-family: Arial; }
+        button { margin: 5px; padding: 6px 12px; }
+        #output { margin-top: 15px; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+
+<h2>Weather Data Fetcher</h2>
+
+<button id="promiseBtn">Fetch Using Promises</button>
+<button id="asyncBtn">Fetch Using Async/Await</button>
+
+<div id="output"></div>
+
+<script>
+
+const output = document.getElementById("output");
+
+const API_URL =
+"https://api.open-meteo.com/v1/forecast?latitude=17.38&longitude=78.48&current_weather=true";
+
+/* -------- PROMISE VERSION -------- */
+
+const fetchWithPromises = () => {
+
+    output.innerHTML = "Loading weather data...";
+
+    fetch(API_URL)
+        .then(function(response) {
+
+            if (!response.ok) {
+                throw new Error("Network response failed");
+            }
+
+            return response.json();
+        })
+        .then(function(data) {
+            displayWeather(data);
+        })
+        .catch(function(error) {
+
+            output.innerHTML =
+                "<p class='error'>Error: " + error.message + "</p>";
+        });
+};
+
+/* -------- ASYNC/AWAIT VERSION -------- */
+
+const fetchWithAsyncAwait = async () => {
+
+    output.innerHTML = "Loading weather data...";
+
+    try {
+
+        const response = await fetch(API_URL);
+
+        if (!response.ok) {
+            throw new Error("Network response failed");
+        }
+
+        const data = await response.json();
+        displayWeather(data);
+
+    } catch (error) {
+
+        output.innerHTML =
+            "<p class='error'>Error: " + error.message + "</p>";
+    }
+};
+
+/* -------- DISPLAY FUNCTION -------- */
+
+const displayWeather = (data) => {
+
+    const weather = data.current_weather;
+
+    output.innerHTML =
+        "<h3>Weather Report</h3>" +
+        "<p><strong>Temperature:</strong> " + weather.temperature + " °C</p>" +
+        "<p><strong>Wind Speed:</strong> " + weather.windspeed + " km/h</p>" +
+        "<p><strong>Time:</strong> " + weather.time + "</p>";
+};
+
+/* -------- EVENT LISTENERS -------- */
+
+document.getElementById("promiseBtn")
+    .addEventListener("click", fetchWithPromises);
+
+document.getElementById("asyncBtn")
+    .addEventListener("click", fetchWithAsyncAwait);
+
+</script>
+
+</body>
+</html>

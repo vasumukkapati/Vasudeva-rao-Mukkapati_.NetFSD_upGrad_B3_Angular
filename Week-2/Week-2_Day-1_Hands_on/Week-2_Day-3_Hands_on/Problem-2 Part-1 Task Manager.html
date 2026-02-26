@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task Manager with Async Storage</title>
+    <style>
+        body { font-family: Arial; }
+        button { margin: 5px; padding: 6px 12px; }
+        input { padding: 6px; margin: 5px; }
+        #output { margin-top: 15px; }
+    </style>
+</head>
+<body>
+
+<h2>Task Manager with Async Storage</h2>
+
+<input type="text" id="taskInput" placeholder="Enter Task">
+<br>
+
+<button id="addBtn">Add Task</button>
+<button id="deleteBtn">Delete  Task</button>
+<button id="listBtn">List Tasks</button>
+
+<div id="output"></div>
+
+<script>
+
+let tasks = [];
+const output = document.getElementById("output");
+
+/* -------- PROMISE FUNCTIONS -------- */
+
+const addTaskPromise = (task) => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            if (!task) {
+                reject("Task cannot be empty");
+            } else {
+                tasks.push(task);
+                resolve();
+            }
+        }, 300);
+    });
+};
+
+const deleteTaskPromise = () => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            if (tasks.length === 0) {
+                reject("No tasks to delete");
+            } else {
+                tasks.pop();
+                resolve();
+            }
+        }, 300);
+    });
+};
+
+/* -------- FUNCTIONS -------- */
+
+const addTask = async () => {
+    const taskValue = document.getElementById("taskInput").value.trim();
+
+    try {
+        await addTaskPromise(taskValue);
+
+        // Show ONLY latest task
+        const lastIndex = tasks.length - 1;
+        output.innerHTML =
+            "<h3>Task List</h3>" +
+            "<p>" + (lastIndex + 1) + ". " + tasks[lastIndex] + "</p>";
+
+    } catch (error) {
+        output.innerHTML = error;
+    }
+
+    document.getElementById("taskInput").value = "";
+};
+
+const deleteTask = async () => {
+    try {
+        await deleteTaskPromise();
+        output.innerHTML = "<h3>Last task removed</h3>";
+    } catch (error) {
+        output.innerHTML = error;
+    }
+};
+
+const listTasks = () => {
+
+    let html = "<h3>Task List</h3>";
+
+    if (tasks.length === 0) {
+        html += "<p>No tasks available</p>";
+    } else {
+        tasks.forEach((task, index) => {
+            html += "<p>" + (index + 1) + ". " + task + "</p>";
+        });
+    }
+
+    output.innerHTML = html;
+};
+
+/* -------- EVENT LISTENERS -------- */
+
+document.getElementById("addBtn").addEventListener("click", addTask);
+document.getElementById("deleteBtn").addEventListener("click", deleteTask);
+document.getElementById("listBtn").addEventListener("click", listTasks);
+
+</script>
+
+</body>
+</html>

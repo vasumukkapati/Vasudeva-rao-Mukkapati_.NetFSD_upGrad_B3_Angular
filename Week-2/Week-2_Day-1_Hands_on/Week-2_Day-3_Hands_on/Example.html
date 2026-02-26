@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Async Await Example</title>
+</head>
+<body>
+
+<h3>Asynchronous Programming in JavaScript --- using async / await</h3>
+<hr>
+
+<button onclick="fn_getData()">Get Data</button>
+<br><br>
+
+<ul id="list1" style="border:2px solid blue; padding:20px;">
+</ul>
+
+<script>
+
+var lstObj = document.getElementById("list1");
+
+/* -------- FETCH FUNCTION -------- */
+async function fn_getData() {
+
+    try {
+
+        let url = "https://jsonplaceholder.typicode.com/posts";
+
+        let response = await fetch(url);
+
+        let dataArray = await response.json();
+
+        displayData(dataArray);
+
+    }
+    catch(error) {
+        console.log("Error:", error);
+    }
+}
+
+/* -------- DISPLAY FUNCTION -------- */
+function displayData(dataArray) {
+
+    let str = "";
+
+    for (let item of dataArray) {
+
+        str += `<li>
+                    ${item.id} - 
+                    <span style="color:blue;">
+                        ${item.title}
+                    </span>
+                </li>`;
+    }
+
+    lstObj.innerHTML = str;
+}
+
+</script>
+
+</body>
+</html>
