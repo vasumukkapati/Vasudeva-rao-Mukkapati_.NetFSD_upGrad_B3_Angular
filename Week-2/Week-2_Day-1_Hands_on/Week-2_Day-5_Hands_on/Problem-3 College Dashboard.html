@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>College Event Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="#">Event Dashboard</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#cardsSection">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#listSection">Events</a></li>
+        <li class="nav-item">
+          <button class="btn btn-light ms-2" data-bs-toggle="modal" data-bs-target="#addEventModal">
+            Add Event
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- ================= EVENT CARDS SECTION ================= -->
+<div class="container my-5" id="cardsSection">
+  <h3 class="mb-4 text-center">Event Cards</h3>
+  <div class="row g-4" id="eventCardContainer">
+  </div>
+</div>
+
+<!-- ================= EVENT LIST SECTION ================= -->
+<div class="container my-5" id="listSection">
+  <h3 class="mb-4 text-center">Event List</h3>
+
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped text-center">
+      <thead class="table-primary">
+        <tr>
+          <th>Event Name</th>
+          <th>Date</th>
+          <th>Venue</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="eventTableBody">
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ================= MODAL ================= -->
+<div class="modal fade" id="addEventModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <form id="eventForm" class="needs-validation" novalidate>
+        <div class="modal-header">
+          <h5 class="modal-title">Add New Event</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <div class="modal-body">
+
+          <div class="mb-3">
+            <label class="form-label">Event Name</label>
+            <input type="text" class="form-control" id="eventName" required>
+            <div class="invalid-feedback">Please enter event name.</div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Date</label>
+            <input type="date" class="form-control" id="eventDate" required>
+            <div class="invalid-feedback">Please select date.</div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Venue</label>
+            <input type="text" class="form-control" id="eventVenue" required>
+            <div class="invalid-feedback">Please enter venue.</div>
+          </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save Event</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+(() => {
+  'use strict';
+
+  const form = document.getElementById("eventForm");
+  const cardContainer = document.getElementById("eventCardContainer");
+  const tableBody = document.getElementById("eventTableBody");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    if (!form.checkValidity()) {
+      e.stopPropagation();
+      form.classList.add("was-validated");
+      return;
+    }
+
+    const name = document.getElementById("eventName").value;
+    const date = document.getElementById("eventDate").value;
+    const venue = document.getElementById("eventVenue").value;
+
+    /* ----------- Add Card ----------- */
+    const col = document.createElement("div");
+    col.className = "col-sm-12 col-md-6 col-lg-4";
+
+    col.innerHTML = `
+      <div class="card shadow">
+        <div class="card-body">
+          <h5 class="card-title">${name}</h5>
+          <p class="card-text">Date: ${date}</p>
+          <p class="card-text">Venue: ${venue}</p>
+          <span class="badge bg-success">Active</span>
+        </div>
+      </div>
+    `;
+    cardContainer.appendChild(col);
+
+    /* ----------- Add Table Row ----------- */
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${name}</td>
+      <td>${date}</td>
+      <td>${venue}</td>
+      <td><span class="badge bg-success">Active</span></td>
+    `;
+    tableBody.appendChild(row);
+
+    /* ----------- Close Modal ----------- */
+    const modal = bootstrap.Modal.getInstance(document.getElementById('addEventModal'));
+    modal.hide();
+
+    form.reset();
+    form.classList.remove("was-validated");
+  });
+})();
+</script>
+
+</body>
+</html>
