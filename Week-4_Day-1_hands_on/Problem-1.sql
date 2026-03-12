@@ -1,0 +1,133 @@
+CREATE DATABASE RetailDB;
+
+
+USE RetailDB;
+
+CREATE TABLE Stores
+(
+StoreID INT PRIMARY KEY,
+StoreName VARCHAR(50)
+);
+
+CREATE TABLE Products
+(
+ProductID INT PRIMARY KEY,
+ProductName VARCHAR(50),
+Price DECIMAL(10,2)
+);
+
+CREATE TABLE Orders
+(
+OrderID INT PRIMARY KEY,
+StoreID INT,
+OrderDate DATE,
+FOREIGN KEY (StoreID) REFERENCES Stores(StoreID)
+);
+
+CREATE TABLE OrderItems
+(
+OrderItemID INT PRIMARY KEY,
+OrderID INT,
+ProductID INT,
+Quantity INT,
+UnitPrice DECIMAL(10,2),
+Discount DECIMAL(5,2),
+FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+
+INSERT INTO Stores VALUES
+(1,'Hyderabad Store'),
+(2,'Delhi Store'),
+(3,'Mumbai Store');
+
+INSERT INTO Products VALUES
+(101,'Laptop',50000),
+(102,'Mobile',20000),
+(103,'Tablet',15000),
+(104,'Headphones',2000),
+(105,'Keyboard',1000);
+
+INSERT INTO Orders VALUES
+(1,1,'2024-01-10'),
+(2,2,'2024-02-15'),
+(3,1,'2024-03-05'),
+(4,3,'2024-04-01');
+
+INSERT INTO OrderItems VALUES
+(1,1,101,2,50000,10),
+(2,1,104,5,2000,5),
+(3,2,102,3,20000,8),
+(4,3,103,4,15000,6),
+(5,4,105,10,1000,2);
+
+--Stored Procedure – Total Sales Per Store
+
+CREATE PROCEDURE sp_TotalSalesPerStore
+AS
+BEGIN
+SELECT 
+s.StoreID,
+s.StoreName,
+SUM(oi.Quantity * oi.UnitPrice) AS TotalSales
+FROM Stores s
+JOIN Orders o ON s.StoreID = o.StoreID
+JOIN OrderItems oi ON o.OrderID = oi.OrderID
+GROUP BY s.StoreID,s.StoreName
+END
+
+EXEC sp_TotalSalesPerStore;
+
+--Stored Procedure – Orders By Date Range
+
+CREATE PROCEDURE sp_OrdersByDate
+@StartDate DATE,
+@EndDate DATE
+AS
+BEGIN
+SELECT *
+FROM Orders
+WHERE OrderDate BETWEEN @StartDate AND @EndDate
+END
+
+EXEC sp_OrdersByDate '2024-01-01','2024-12-31';
+
+--Scalar Function – Price After Discount
+
+CREATE FUNCTION fn_DiscountPrice
+(
+@Price DECIMAL(10,2),
+@Discount DECIMAL(5,2)
+)
+RETURNS DECIMAL(10,2)
+AS
+BEGIN
+
+DECLARE @FinalPrice DECIMAL(10,2)
+
+SET @FinalPrice = @Price - (@Price*@Discount/100)
+
+RETURN @FinalPrice
+
+END
+
+SELECT dbo.fn_DiscountPrice(50000,10) AS FinalPrice;
+
+--Table Valued Function – Top 5 Selling Products
+
+CREATE FUNCTION fn_Top5Products()
+RETURNS TABLE
+AS
+RETURN
+(
+SELECT TOP 5
+p.ProductID,
+p.ProductName,
+SUM(oi.Quantity) AS TotalSold
+FROM Products p
+JOIN OrderItems oi ON p.ProductID = oi.ProductID
+GROUP BY p.ProductID,p.ProductName
+ORDER BY TotalSold DESC
+)
+
+SELECT * FROM fn_Top5Products();
