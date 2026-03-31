@@ -1,0 +1,5 @@
+﻿{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=VASU\\SQLEXPRESS;Database=productdb;Trusted_Connection=True;TrustServerCertificate=True;"
+  }
+}
